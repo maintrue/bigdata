@@ -16,7 +16,7 @@ class SparkConfigHelper(builder: SparkSession.Builder) {
       // 3. 获取其中所有的 key, 和所有的 value
       val key = entry.getKey
       val value = entry.getValue.unwrapped().asInstanceOf[String]
-      println((key,value))
+      // println((key,value))
       // 判断: 判断配置的来源
       val origin = entry.getValue.origin().filename()
       if (StringUtils.isNotBlank(origin)) {

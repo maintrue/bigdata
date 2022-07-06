@@ -2,10 +2,13 @@ package com.main.dmp.utils
 
 import com.typesafe.config.ConfigFactory
 import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang3.time.FastDateFormat
 import org.apache.kudu.Schema
 import org.apache.kudu.client.CreateTableOptions
 import org.apache.kudu.spark.kudu.KuduContext
 import org.apache.spark.sql.{DataFrame, Dataset, SaveMode, SparkSession}
+
+import java.util.Date
 
 // 主题设计思路就是将 SparkSession 或者 DataFrame 隐式转换为 KuduHelper, 在 KuduHelper 中提供帮助方法
 class KuduHelper {
@@ -35,8 +38,8 @@ class KuduHelper {
                       // 此方法就是设计目标 SparkSession.createKuduTable(tableName) 中被调用的方法
                       partitionKey: Seq[String]): Unit = {
     if (kuduContext.tableExists(tableName)) {
-      throw new RuntimeException("kuduContext.tableExists is true, Please check.")
-//      kuduContext.deleteTable(tableName)
+//      throw new RuntimeException("kuduContext.tableExists is true, Please check.")
+      kuduContext.deleteTable(tableName)
     }
 
     import scala.collection.JavaConverters._
@@ -87,13 +90,16 @@ class KuduHelper {
 object KuduHelper {
 
   // 将 SparkSession 转为 KuduHelper
-  implicit def sparkToKuduContext(spark: SparkSession): Unit = {
+  implicit def sparkToKuduContext(spark: SparkSession): KuduHelper = {
     new KuduHelper(spark)
   }
 
   // 将 Dataset 转为 KuduHelper
-  implicit def datasetToKuduContext(dataset: Dataset[Any]): Unit = {
+  implicit def datasetToKuduContext(dataset: Dataset[_]): KuduHelper = {
     new KuduHelper(dataset)
   }
 
+  def formattedDate(): String = {
+    FastDateFormat.getInstance("yyyMMdd").format(new Date())
+  }
 }
