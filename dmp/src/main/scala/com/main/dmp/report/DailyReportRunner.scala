@@ -15,7 +15,7 @@ object DailyReportRunner {
       .getOrCreate()
 
     val processors: List[ReportProcessor] = List(
-      NewRegionReportProcessor
+      AdsRegionProcessor
     )
 
     for (processor <- processors) {
