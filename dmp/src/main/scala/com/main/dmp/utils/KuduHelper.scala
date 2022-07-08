@@ -34,18 +34,34 @@ class KuduHelper {
     this.dataset = dataset
   }
 
-  def createKuduTable(tableName: String, schema: Schema,
-                      // 此方法就是设计目标 SparkSession.createKuduTable(tableName) 中被调用的方法
-                      partitionKey: Seq[String]): Unit = {
+  /**
+   * 1. 通过隐式转换, 将 SparkSession 对象转为 KuduHelper 的对象
+   * 2. 通过 KuduHelper 中的 createKuduTable() 就可以创建一张表
+   *
+   * 调用方式: spark.createKuduTable()
+   */
+  def createKuduTable(tableName: String, schema: Schema, keys: Seq[String]): Unit = {
+    createKuduTable(tableName, schema, keys, isDelete = true)
+  }
+
+  def createKuduTable(tableName: String, schema: Schema, keys: Seq[String], isDelete: Boolean): Unit = {
+    // 问题一: KuduContext 来创建
+    // 问题二: KuduContext 创建的时候, 需要 Kudu 服务器的地址, 还需要 SparkSession 对象, 超时时间
+    // create 3: 如果存在则删掉旧的表
     if (kuduContext.tableExists(tableName)) {
-//      throw new RuntimeException("kuduContext.tableExists is true, Please check.")
-      kuduContext.deleteTable(tableName)
+      if(isDelete){
+        kuduContext.deleteTable(tableName)
+      }else{
+        return
+      }
     }
 
+    // create 4: 创建表
     import scala.collection.JavaConverters._
+
     val options = new CreateTableOptions()
       .setNumReplicas(config.getInt("kudu.common.factor"))
-      .addHashPartitions(partitionKey.asJava, 6)
+      .addHashPartitions(keys.asJava, 2)
 
     kuduContext.createTable(tableName, schema, options)
   }

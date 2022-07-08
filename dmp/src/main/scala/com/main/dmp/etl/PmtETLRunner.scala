@@ -46,7 +46,7 @@ object PmtETLRunner {
 
     // 4. 数据落地
     spark.createKuduTable(ODS_TABLE_NAME, schema, keys)
-    result.limit(100).saveToKudu(ODS_TABLE_NAME)
+    result.limit(200).saveToKudu(ODS_TABLE_NAME)
 
   }
 
