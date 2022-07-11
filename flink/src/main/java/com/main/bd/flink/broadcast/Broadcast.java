@@ -1,4 +1,4 @@
-package com.main.bd.flink.other;
+package com.main.bd.flink.broadcast;
 
 import org.apache.flink.api.common.functions.RichMapFunction;
 import org.apache.flink.api.java.ExecutionEnvironment;
