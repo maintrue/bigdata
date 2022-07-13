@@ -10,7 +10,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
  * 3.ds.collect 将分布式数据收集为本地集合
  * 4.ds.setParallelism(1).writeAsText("本地/HDFS的path",WriteMode.OVERWRITE)
  */
-public class FileSink {
+public class LocalFileSink {
 
     public static void main(String[] args) throws Exception {
         //1.env

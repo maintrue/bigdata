@@ -16,6 +16,9 @@ import org.apache.flink.util.Collector;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 重启策略
+ */
 public class RestartStrategy {
 
     public static void main(String[] args) throws Exception {
