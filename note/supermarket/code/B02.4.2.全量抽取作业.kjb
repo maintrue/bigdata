@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>1-全量抽取作业</name>
+  <name>B02.4.1.全量抽取数据转换.ktr</name>
   <description/>
   <extended_description/>
   <job_version/>
@@ -18,11 +18,11 @@
     </parameter>
   </parameters>
   <connection>
-    <name>node1hive</name>
-    <server>node1</server>
+    <name>hive</name>
+    <server>server1</server>
     <type>HIVE2</type>
     <access>Native</access>
-    <database>itcast_ods</database>
+    <database>test</database>
     <port>10000</port>
     <username>root</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79ce10cc9da0ce</password>
@@ -372,7 +372,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/1-全量抽取数据转换.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/B02.4.1.全量抽取数据转换.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -434,7 +434,7 @@ msck repair table itcast_ods.itcast_payments;</sql>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
-      <connection>node1hive</connection>
+      <connection>hive</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
@@ -510,6 +510,10 @@ msck repair table itcast_ods.itcast_payments;</sql>
       <attribute>
         <key>7test</key>
         <value>{"children":[{"children":[],"id":"hdfsPassword","value":"cGFzc3dvcmQ="},{"children":[],"id":"oozieUrl","value":"http://localhost:8080/oozie"},{"children":[],"id":"mapr","value":"N"},{"children":[],"id":"useGateway","value":"N"},{"children":[],"id":"lastModifiedDate","value":"1574399827764"},{"children":[],"id":"jobTrackerHost","value":"node1"},{"children":[],"id":"zooKeeperHost","value":"node1"},{"children":[],"id":"shimIdentifier","value":null},{"children":[],"id":"gatewayUrl","value":null},{"children":[],"id":"jobTrackerPort","value":"8032"},{"children":[],"id":"zooKeeperPort","value":"2181"},{"children":[],"id":"name","value":"7test"},{"children":[],"id":"hdfsPort","value":"8020"},{"children":[],"id":"hdfsUsername","value":"user"},{"children":[],"id":"gatewayPassword","value":null},{"children":[],"id":"kafkaBootstrapServers","value":null},{"children":[],"id":"storageScheme","value":"hdfs"},{"children":[],"id":"hdfsHost","value":"node1"},{"children":[],"id":"gatewayUsername","value":null}],"id":"7test","value":null,"name":"7test","owner":null,"ownerPermissionsList":[]}</value>
+      </attribute>
+      <attribute>
+        <key>hadoop</key>
+        <value>{"children":[{"children":[],"id":"hdfsPassword","value":"cm9vdA=="},{"children":[],"id":"oozieUrl","value":"http://localhost:8080/oozie"},{"children":[],"id":"mapr","value":"N"},{"children":[],"id":"useGateway","value":"N"},{"children":[],"id":"lastModifiedDate","value":"1658420471083"},{"children":[],"id":"jobTrackerHost","value":"server1"},{"children":[],"id":"zooKeeperHost","value":"server1"},{"children":[],"id":"shimIdentifier","value":null},{"children":[],"id":"gatewayUrl","value":null},{"children":[],"id":"jobTrackerPort","value":"8032"},{"children":[],"id":"zooKeeperPort","value":"2181"},{"children":[],"id":"name","value":"hadoop"},{"children":[],"id":"hdfsPort","value":"8020"},{"children":[],"id":"hdfsUsername","value":"root"},{"children":[],"id":"gatewayPassword","value":null},{"children":[],"id":"kafkaBootstrapServers","value":null},{"children":[],"id":"storageScheme","value":"hdfs"},{"children":[],"id":"hdfsHost","value":"server1"},{"children":[],"id":"gatewayUsername","value":null}],"id":"hadoop","value":null,"name":"hadoop","owner":null,"ownerPermissionsList":[]}</value>
       </attribute>
       <attribute>
         <key>bigdata-37</key>

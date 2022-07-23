@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>B02.4.1.全量抽取数据转换.ktr</name>
+    <name>02-剩余表增量抽取转换</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -11,7 +11,7 @@
     <parameters>
       <parameter>
         <name>dt</name>
-        <default_value>20190909</default_value>
+        <default_value>20190910</default_value>
         <description/>
       </parameter>
     </parameters>
@@ -433,23 +433,74 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/11/17 22:20:13.178</created_date>
+    <created_date>2020/01/11 15:25:35.481</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/11/17 22:20:13.178</modified_date>
+    <modified_date>2020/01/11 15:25:35.481</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>localhost-itcast</name>
-    <server>192.168.163.142</server>
+    <name>newmyhive</name>
+    <server>node1</server>
+    <type>HIVE2</type>
+    <access>Native</access>
+    <database>itcast_ods</database>
+    <port>10000</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce10cc9da0ce</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>10000</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>node1mysql</name>
+    <server>node1</server>
     <type>MYSQL</type>
     <access>Native</access>
     <database>itcast_shop</database>
     <port>3306</port>
     <username>root</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce10cc9da0ce</password>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ff228dc6fa8c</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -498,18 +549,8 @@
   </connection>
   <order>
     <hop>
-      <from>根据创建日期读取数据 -itcast_orders</from>
-      <to>字段选择</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>字段选择</from>
-      <to>Parquet output</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>根据创建日期读取数据-itcast_order_goods</from>
-      <to>字段选择 2</to>
+      <from>字段选择 10</from>
+      <to>Parquet output 10</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -518,28 +559,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>根据创建日期读取数据 -itcast_goods</from>
-      <to>字段选择 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>字段选择 3</from>
-      <to>Parquet output 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>根据创建日期读取数据-itcast_shops</from>
-      <to>字段选择 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>字段选择 4</from>
       <to>Parquet output 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>根据创建日期读取数据-itcast_goods_cats</from>
-      <to>字段选择 5</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -548,28 +569,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>根据创建日期读取数据-itcast_org</from>
-      <to>字段选择 6</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>字段选择 6</from>
       <to>Parquet output 6</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>根据创建日期读取数据-itcast_order_refunds</from>
-      <to>字段选择 7</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>字段选择 7</from>
-      <to>Parquet output 7</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>根据创建日期读取数据-itcast_users</from>
-      <to>字段选择 8</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -578,13 +579,23 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>根据创建日期读取数据-itcast_user_address</from>
-      <to>字段选择 9</to>
+      <from>字段选择 9</from>
+      <to>Parquet output 9</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>字段选择 9</from>
-      <to>Parquet output 9</to>
+      <from>根据创建日期读取数据-itcast_goods_cats</from>
+      <to>字段选择 5</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>根据创建日期读取数据-itcast_order_goods</from>
+      <to>字段选择 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>根据创建日期读取数据-itcast_org</from>
+      <to>字段选择 6</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -593,527 +604,56 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>字段选择 10</from>
-      <to>Parquet output 10</to>
+      <from>根据创建日期读取数据-itcast_shops</from>
+      <to>字段选择 4</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>根据创建日期读取数据-itcast_user_address</from>
+      <to>字段选择 9</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>根据创建日期读取数据-itcast_users</from>
+      <to>字段选择 8</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>执行SQL脚本 7</from>
+      <to>根据创建日期读取数据-itcast_payments</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>执行SQL脚本 6</from>
+      <to>根据创建日期读取数据-itcast_user_address</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>执行SQL脚本 5</from>
+      <to>根据创建日期读取数据-itcast_users</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>执行SQL脚本 4</from>
+      <to>根据创建日期读取数据-itcast_org</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>执行SQL脚本 3</from>
+      <to>根据创建日期读取数据-itcast_goods_cats</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>执行SQL脚本 2</from>
+      <to>根据创建日期读取数据-itcast_shops</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>执行SQL脚本</from>
+      <to>根据创建日期读取数据-itcast_order_goods</to>
       <enabled>Y</enabled>
     </hop>
   </order>
-  <step>
-    <name>Parquet output</name>
-    <type>ParquetOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <filename>hc://hadoop/user/hive/warehouse/itcast_ods.db/itcast_orders/dt=${dt}/00</filename>
-    <overrideOutput>Y</overrideOutput>
-    <compression>SNAPPY</compression>
-    <parquetVersion>PARQUET_1</parquetVersion>
-    <enableDictionary>N</enableDictionary>
-    <dictPageSize>1024</dictPageSize>
-    <rowGroupSize/>
-    <dataPageSize/>
-    <extension>parquet</extension>
-    <dateInFilename>N</dateInFilename>
-    <timeInFilename>N</timeInFilename>
-    <dateTimeFormat/>
-    <fields>
-      <field>
-        <path>orderId</path>
-        <name>orderId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>orderNo</path>
-        <name>orderNo</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>userId</path>
-        <name>userId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>orderStatus</path>
-        <name>orderStatus</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsMoney</path>
-        <name>goodsMoney</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>deliverType</path>
-        <name>deliverType</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>deliverMoney</path>
-        <name>deliverMoney</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>totalMoney</path>
-        <name>totalMoney</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>realTotalMoney</path>
-        <name>realTotalMoney</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>payType</path>
-        <name>payType</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isPay</path>
-        <name>isPay</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>areaId</path>
-        <name>areaId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>userAddressId</path>
-        <name>userAddressId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>areaIdPath</path>
-        <name>areaIdPath</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>userName</path>
-        <name>userName</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>userAddress</path>
-        <name>userAddress</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>userPhone</path>
-        <name>userPhone</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>orderScore</path>
-        <name>orderScore</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isInvoice</path>
-        <name>isInvoice</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>invoiceClient</path>
-        <name>invoiceClient</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>orderRemarks</path>
-        <name>orderRemarks</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>orderSrc</path>
-        <name>orderSrc</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>needPay</path>
-        <name>needPay</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>payRand</path>
-        <name>payRand</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>orderType</path>
-        <name>orderType</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isRefund</path>
-        <name>isRefund</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isAppraise</path>
-        <name>isAppraise</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>cancelReason</path>
-        <name>cancelReason</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>rejectReason</path>
-        <name>rejectReason</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>rejectOtherReason</path>
-        <name>rejectOtherReason</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isClosed</path>
-        <name>isClosed</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsSearchKeys</path>
-        <name>goodsSearchKeys</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>orderunique</path>
-        <name>orderunique</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isFromCart</path>
-        <name>isFromCart</name>
-        <type>2</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>receiveTime</path>
-        <name>receiveTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>deliveryTime</path>
-        <name>deliveryTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>tradeNo</path>
-        <name>tradeNo</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>dataFlag</path>
-        <name>dataFlag</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>createTime</path>
-        <name>createTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>settlementId</path>
-        <name>settlementId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>commissionFee</path>
-        <name>commissionFee</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>scoreMoney</path>
-        <name>scoreMoney</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>useScore</path>
-        <name>useScore</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>orderCode</path>
-        <name>orderCode</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>extraJson</path>
-        <name>extraJson</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>orderCodeTargetId</path>
-        <name>orderCodeTargetId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>noticeDeliver</path>
-        <name>noticeDeliver</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>invoiceJson</path>
-        <name>invoiceJson</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>lockCashMoney</path>
-        <name>lockCashMoney</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>payTime</path>
-        <name>payTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isBatch</path>
-        <name>isBatch</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>totalPayFee</path>
-        <name>totalPayFee</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>modifiedTime</path>
-        <name>modifiedTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>704</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>Parquet output 10</name>
     <type>ParquetOutput</type>
@@ -1125,7 +665,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>hc://hadoop/user/hive/warehouse/itcast_ods.db/itcast_payments/dt=${dt}/00</filename>
+    <filename>hc://hadooptest/user/hive/warehouse/itcast_ods.db/itcast_payments/dt=${dt}/00</filename>
     <overrideOutput>Y</overrideOutput>
     <compression>SNAPPY</compression>
     <parquetVersion>PARQUET_1</parquetVersion>
@@ -1229,8 +769,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>816</yloc>
+      <xloc>828</xloc>
+      <yloc>993</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1245,7 +785,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>hc://hadoop/user/hive/warehouse/itcast_ods.db/itcast_order_goods/dt=${dt}/00</filename>
+    <filename>hc://hadooptest/user/hive/warehouse/itcast_ods.db/itcast_order_goods/dt=${dt}/00</filename>
     <overrideOutput>Y</overrideOutput>
     <compression>SNAPPY</compression>
     <parquetVersion>PARQUET_1</parquetVersion>
@@ -1412,389 +952,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>192</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Parquet output 3</name>
-    <type>ParquetOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <filename>hc://hadoop/user/hive/warehouse/itcast_ods.db/itcast_goods/dt=${dt}/00</filename>
-    <overrideOutput>Y</overrideOutput>
-    <compression>SNAPPY</compression>
-    <parquetVersion>PARQUET_1</parquetVersion>
-    <enableDictionary>N</enableDictionary>
-    <dictPageSize>1024</dictPageSize>
-    <rowGroupSize/>
-    <dataPageSize/>
-    <extension>parquet</extension>
-    <dateInFilename>N</dateInFilename>
-    <timeInFilename>N</timeInFilename>
-    <dateTimeFormat/>
-    <fields>
-      <field>
-        <path>goodsId</path>
-        <name>goodsId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsSn</path>
-        <name>goodsSn</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>productNo</path>
-        <name>productNo</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsName</path>
-        <name>goodsName</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsImg</path>
-        <name>goodsImg</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>shopId</path>
-        <name>shopId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsType</path>
-        <name>goodsType</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>marketPrice</path>
-        <name>marketPrice</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>shopPrice</path>
-        <name>shopPrice</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>warnStock</path>
-        <name>warnStock</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsStock</path>
-        <name>goodsStock</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsUnit</path>
-        <name>goodsUnit</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsTips</path>
-        <name>goodsTips</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isSale</path>
-        <name>isSale</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isBest</path>
-        <name>isBest</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isHot</path>
-        <name>isHot</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isNew</path>
-        <name>isNew</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isRecom</path>
-        <name>isRecom</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsCatIdPath</path>
-        <name>goodsCatIdPath</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsCatId</path>
-        <name>goodsCatId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>shopCatId1</path>
-        <name>shopCatId1</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>shopCatId2</path>
-        <name>shopCatId2</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>brandId</path>
-        <name>brandId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsDesc</path>
-        <name>goodsDesc</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsStatus</path>
-        <name>goodsStatus</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>saleNum</path>
-        <name>saleNum</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>saleTime</path>
-        <name>saleTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>visitNum</path>
-        <name>visitNum</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>appraiseNum</path>
-        <name>appraiseNum</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isSpec</path>
-        <name>isSpec</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>gallery</path>
-        <name>gallery</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsSeoKeywords</path>
-        <name>goodsSeoKeywords</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>illegalRemarks</path>
-        <name>illegalRemarks</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>dataFlag</path>
-        <name>dataFlag</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>createTime</path>
-        <name>createTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>isFreeShipping</path>
-        <name>isFreeShipping</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsSerachKeywords</path>
-        <name>goodsSerachKeywords</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>modifyTime</path>
-        <name>modifyTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>704</xloc>
-      <yloc>272</yloc>
+      <xloc>828</xloc>
+      <yloc>369</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1809,7 +968,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>hc://hadoop/user/hive/warehouse/itcast_ods.db/itcast_shops/dt=${dt}/00</filename>
+    <filename>hc://hadooptest/user/hive/warehouse/itcast_ods.db/itcast_shops/dt=${dt}/00</filename>
     <overrideOutput>Y</overrideOutput>
     <compression>SNAPPY</compression>
     <parquetVersion>PARQUET_1</parquetVersion>
@@ -2246,8 +1405,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>336</yloc>
+      <xloc>828</xloc>
+      <yloc>513</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2262,7 +1421,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>hc://hadoop/user/hive/warehouse/itcast_ods.db/itcast_goods_cats/dt=${dt}/00</filename>
+    <filename>hc://hadooptest/user/hive/warehouse/itcast_ods.db/itcast_goods_cats/dt=${dt}/00</filename>
     <overrideOutput>Y</overrideOutput>
     <compression>SNAPPY</compression>
     <parquetVersion>PARQUET_1</parquetVersion>
@@ -2483,8 +1642,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>416</yloc>
+      <xloc>828</xloc>
+      <yloc>593</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2499,7 +1658,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>hc://hadoop/user/hive/warehouse/itcast_ods.db/itcast_org/dt=${dt}/00</filename>
+    <filename>hc://hadooptest/user/hive/warehouse/itcast_ods.db/itcast_org/dt=${dt}/00</filename>
     <overrideOutput>Y</overrideOutput>
     <compression>SNAPPY</compression>
     <parquetVersion>PARQUET_1</parquetVersion>
@@ -2612,173 +1771,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>512</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Parquet output 7</name>
-    <type>ParquetOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <filename>hc://hadoop/user/hive/warehouse/itcast_ods.db/itcast_order_refunds/dt=${dt}/00</filename>
-    <overrideOutput>Y</overrideOutput>
-    <compression>SNAPPY</compression>
-    <parquetVersion>PARQUET_1</parquetVersion>
-    <enableDictionary>N</enableDictionary>
-    <dictPageSize>1024</dictPageSize>
-    <rowGroupSize/>
-    <dataPageSize/>
-    <extension>parquet</extension>
-    <dateInFilename>N</dateInFilename>
-    <timeInFilename>N</timeInFilename>
-    <dateTimeFormat/>
-    <fields>
-      <field>
-        <path>id</path>
-        <name>id</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>orderId</path>
-        <name>orderId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>goodsId</path>
-        <name>goodsId</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>refundTo</path>
-        <name>refundTo</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>refundReson</path>
-        <name>refundReson</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>refundOtherReson</path>
-        <name>refundOtherReson</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>backMoney</path>
-        <name>backMoney</name>
-        <type>3</type>
-        <precision>0</precision>
-        <scale>2</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>refundTradeNo</path>
-        <name>refundTradeNo</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>refundRemark</path>
-        <name>refundRemark</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>refundTime</path>
-        <name>refundTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>shopRejectReason</path>
-        <name>shopRejectReason</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>refundStatus</path>
-        <name>refundStatus</name>
-        <type>15</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>createTime</path>
-        <name>createTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-      <field>
-        <path>modifiedTime</path>
-        <name>modifiedTime</name>
-        <type>21</type>
-        <precision>0</precision>
-        <scale>0</scale>
-        <nullable>Y</nullable>
-        <default/>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>704</xloc>
-      <yloc>592</yloc>
+      <xloc>828</xloc>
+      <yloc>689</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2793,7 +1787,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>hc://hadoop/user/hive/warehouse/itcast_ods.db/itcast_users/dt=${dt}/00</filename>
+    <filename>hc://hadooptest/user/hive/warehouse/itcast_ods.db/itcast_users/dt=${dt}/00</filename>
     <overrideOutput>Y</overrideOutput>
     <compression>SNAPPY</compression>
     <parquetVersion>PARQUET_1</parquetVersion>
@@ -3050,8 +2044,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>672</yloc>
+      <xloc>828</xloc>
+      <yloc>849</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3066,7 +2060,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>hc://hadoop/user/hive/warehouse/itcast_ods.db/itcast_user_address/dt=${dt}/00</filename>
+    <filename>hc://hadooptest/user/hive/warehouse/itcast_ods.db/itcast_user_address/dt=${dt}/00</filename>
     <overrideOutput>Y</overrideOutput>
     <compression>SNAPPY</compression>
     <parquetVersion>PARQUET_1</parquetVersion>
@@ -3188,937 +2182,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
-      <yloc>752</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>字段选择</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-      <meta>
-        <name>orderId</name>
-        <rename>orderId</rename>
-        <type>None</type>
-        <length>15</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>orderNo</name>
-        <rename>orderNo</rename>
-        <type>None</type>
-        <length>20</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>userId</name>
-        <rename>userId</rename>
-        <type>None</type>
-        <length>15</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>orderStatus</name>
-        <rename>orderStatus</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsMoney</name>
-        <rename>goodsMoney</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>deliverType</name>
-        <rename>deliverType</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>deliverMoney</name>
-        <rename>deliverMoney</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>totalMoney</name>
-        <rename>totalMoney</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>realTotalMoney</name>
-        <rename>realTotalMoney</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>payType</name>
-        <rename>payType</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isPay</name>
-        <rename>isPay</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>areaId</name>
-        <rename>areaId</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>userAddressId</name>
-        <rename>userAddressId</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>areaIdPath</name>
-        <rename>areaIdPath</rename>
-        <type>None</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>userName</name>
-        <rename>userName</rename>
-        <type>None</type>
-        <length>20</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>userAddress</name>
-        <rename>userAddress</rename>
-        <type>None</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>userPhone</name>
-        <rename>userPhone</rename>
-        <type>None</type>
-        <length>20</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>orderScore</name>
-        <rename>orderScore</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isInvoice</name>
-        <rename>isInvoice</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>invoiceClient</name>
-        <rename>invoiceClient</rename>
-        <type>None</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>orderRemarks</name>
-        <rename>orderRemarks</rename>
-        <type>None</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>orderSrc</name>
-        <rename>orderSrc</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>needPay</name>
-        <rename>needPay</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>payRand</name>
-        <rename>payRand</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>orderType</name>
-        <rename>orderType</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isRefund</name>
-        <rename>isRefund</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isAppraise</name>
-        <rename>isAppraise</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>cancelReason</name>
-        <rename>cancelReason</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>rejectReason</name>
-        <rename>rejectReason</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>rejectOtherReason</name>
-        <rename>rejectOtherReason</rename>
-        <type>None</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isClosed</name>
-        <rename>isClosed</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsSearchKeys</name>
-        <rename>goodsSearchKeys</rename>
-        <type>None</type>
-        <length>21845</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>orderunique</name>
-        <rename>orderunique</rename>
-        <type>None</type>
-        <length>50</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isFromCart</name>
-        <rename>isFromCart</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>receiveTime</name>
-        <rename>receiveTime</rename>
-        <type>Date</type>
-        <length>25</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>deliveryTime</name>
-        <rename>deliveryTime</rename>
-        <type>Date</type>
-        <length>25</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>tradeNo</name>
-        <rename>tradeNo</rename>
-        <type>None</type>
-        <length>100</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>dataFlag</name>
-        <rename>dataFlag</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>createTime</name>
-        <rename>createTime</rename>
-        <type>Date</type>
-        <length>25</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>settlementId</name>
-        <rename>settlementId</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>commissionFee</name>
-        <rename>commissionFee</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>scoreMoney</name>
-        <rename>scoreMoney</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>useScore</name>
-        <rename>useScore</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>orderCode</name>
-        <rename>orderCode</rename>
-        <type>None</type>
-        <length>20</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>extraJson</name>
-        <rename>extraJson</rename>
-        <type>None</type>
-        <length>21845</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>orderCodeTargetId</name>
-        <rename>orderCodeTargetId</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>noticeDeliver</name>
-        <rename>noticeDeliver</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>invoiceJson</name>
-        <rename>invoiceJson</rename>
-        <type>None</type>
-        <length>21845</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>lockCashMoney</name>
-        <rename>lockCashMoney</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>payTime</name>
-        <rename>payTime</rename>
-        <type>Date</type>
-        <length>25</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isBatch</name>
-        <rename>isBatch</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>totalPayFee</name>
-        <rename>totalPayFee</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>modifiedTime</name>
-        <rename>modifiedTime</rename>
-        <type>Date</type>
-        <length>0</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>576</xloc>
-      <yloc>96</yloc>
+      <xloc>828</xloc>
+      <yloc>929</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4298,8 +2363,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>816</yloc>
+      <xloc>700</xloc>
+      <yloc>993</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4598,682 +2663,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>192</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>字段选择 3</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-      <meta>
-        <name>goodsId</name>
-        <rename>goodsId</rename>
-        <type>None</type>
-        <length>15</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsSn</name>
-        <rename>goodsSn</rename>
-        <type>None</type>
-        <length>20</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>productNo</name>
-        <rename>productNo</rename>
-        <type>None</type>
-        <length>20</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsName</name>
-        <rename>goodsName</rename>
-        <type>None</type>
-        <length>200</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsImg</name>
-        <rename>goodsImg</rename>
-        <type>None</type>
-        <length>150</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>shopId</name>
-        <rename>shopId</rename>
-        <type>None</type>
-        <length>15</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsType</name>
-        <rename>goodsType</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>marketPrice</name>
-        <rename>marketPrice</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>shopPrice</name>
-        <rename>shopPrice</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>warnStock</name>
-        <rename>warnStock</rename>
-        <type>None</type>
-        <length>15</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsStock</name>
-        <rename>goodsStock</rename>
-        <type>None</type>
-        <length>15</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsUnit</name>
-        <rename>goodsUnit</rename>
-        <type>None</type>
-        <length>10</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsTips</name>
-        <rename>goodsTips</rename>
-        <type>None</type>
-        <length>21845</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isSale</name>
-        <rename>isSale</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isBest</name>
-        <rename>isBest</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isHot</name>
-        <rename>isHot</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isNew</name>
-        <rename>isNew</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isRecom</name>
-        <rename>isRecom</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsCatIdPath</name>
-        <rename>goodsCatIdPath</rename>
-        <type>None</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsCatId</name>
-        <rename>goodsCatId</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>shopCatId1</name>
-        <rename>shopCatId1</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>shopCatId2</name>
-        <rename>shopCatId2</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>brandId</name>
-        <rename>brandId</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsDesc</name>
-        <rename>goodsDesc</rename>
-        <type>None</type>
-        <length>21845</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsStatus</name>
-        <rename>goodsStatus</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>saleNum</name>
-        <rename>saleNum</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>saleTime</name>
-        <rename>saleTime</rename>
-        <type>Date</type>
-        <length>25</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>visitNum</name>
-        <rename>visitNum</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>appraiseNum</name>
-        <rename>appraiseNum</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isSpec</name>
-        <rename>isSpec</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>gallery</name>
-        <rename>gallery</rename>
-        <type>None</type>
-        <length>21845</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsSeoKeywords</name>
-        <rename>goodsSeoKeywords</rename>
-        <type>None</type>
-        <length>200</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>illegalRemarks</name>
-        <rename>illegalRemarks</rename>
-        <type>None</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>dataFlag</name>
-        <rename>dataFlag</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>createTime</name>
-        <rename>createTime</rename>
-        <type>Date</type>
-        <length>25</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>isFreeShipping</name>
-        <rename>isFreeShipping</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsSerachKeywords</name>
-        <rename>goodsSerachKeywords</rename>
-        <type>None</type>
-        <length>21845</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>modifyTime</name>
-        <rename>modifyTime</rename>
-        <type>Date</type>
-        <length>0</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>576</xloc>
-      <yloc>272</yloc>
+      <xloc>700</xloc>
+      <yloc>369</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -6082,8 +3473,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>336</yloc>
+      <xloc>700</xloc>
+      <yloc>513</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -6484,8 +3875,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>416</yloc>
+      <xloc>700</xloc>
+      <yloc>593</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -6682,274 +4073,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>512</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>字段选择 7</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-      <meta>
-        <name>id</name>
-        <rename>id</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>orderId</name>
-        <rename>orderId</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>goodsId</name>
-        <rename>goodsId</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>refundTo</name>
-        <rename>refundTo</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>refundReson</name>
-        <rename>refundReson</rename>
-        <type>None</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>refundOtherReson</name>
-        <rename>refundOtherReson</rename>
-        <type>None</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>backMoney</name>
-        <rename>backMoney</rename>
-        <type>None</type>
-        <length>11</length>
-        <precision>2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>refundTradeNo</name>
-        <rename>refundTradeNo</rename>
-        <type>None</type>
-        <length>100</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>refundRemark</name>
-        <rename>refundRemark</rename>
-        <type>None</type>
-        <length>500</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>refundTime</name>
-        <rename>refundTime</rename>
-        <type>Date</type>
-        <length>25</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>shopRejectReason</name>
-        <rename>shopRejectReason</rename>
-        <type>None</type>
-        <length>255</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>refundStatus</name>
-        <rename>refundStatus</rename>
-        <type>None</type>
-        <length>2</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>createTime</name>
-        <rename>createTime</rename>
-        <type>Date</type>
-        <length>25</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>modifiedTime</name>
-        <rename>modifiedTime</rename>
-        <type>Date</type>
-        <length>0</length>
-        <precision>-2</precision>
-        <conversion_mask>yyyy-MM-dd HH:mm:ss</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>576</xloc>
-      <yloc>592</yloc>
+      <xloc>700</xloc>
+      <yloc>689</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7418,8 +4543,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>672</yloc>
+      <xloc>700</xloc>
+      <yloc>849</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7633,14 +4758,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>752</yloc>
+      <xloc>700</xloc>
+      <yloc>929</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>根据创建日期读取数据 -itcast_goods</name>
-    <type>TableInput</type>
+    <name>执行SQL脚本</name>
+    <type>ExecSQL</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -7649,15 +4774,19 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>localhost-itcast</connection>
-    <sql>SELECT *
-FROM itcast_goods
-;</sql>
-    <limit>0</limit>
-    <lookup/>
+    <connection>newmyhive</connection>
     <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>alter table itcast_ods.itcast_order_goods add if not exists partition(dt='$dt');</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -7667,14 +4796,14 @@ FROM itcast_goods
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
-      <yloc>272</yloc>
+      <xloc>336</xloc>
+      <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>根据创建日期读取数据 -itcast_orders</name>
-    <type>TableInput</type>
+    <name>执行SQL脚本 2</name>
+    <type>ExecSQL</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -7683,15 +4812,19 @@ FROM itcast_goods
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>localhost-itcast</connection>
-    <sql>SELECT *
-FROM itcast_orders
-WHERE DATE_FORMAT(createtime, '%Y%m%d') &lt;= '${dt}';</sql>
-    <limit>0</limit>
-    <lookup/>
+    <connection>newmyhive</connection>
     <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>alter table itcast_ods.itcast_shops add if not exists partition(dt='$dt');</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -7701,8 +4834,198 @@ WHERE DATE_FORMAT(createtime, '%Y%m%d') &lt;= '${dt}';</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
-      <yloc>96</yloc>
+      <xloc>368</xloc>
+      <yloc>512</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>执行SQL脚本 3</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>newmyhive</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>alter table itcast_ods.itcast_goods_cats add if not exists partition(dt='$dt');</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>368</xloc>
+      <yloc>592</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>执行SQL脚本 4</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>newmyhive</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>alter table itcast_ods.itcast_org add if not exists partition(dt='$dt');</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>368</xloc>
+      <yloc>688</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>执行SQL脚本 5</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>newmyhive</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>alter table itcast_ods.itcast_users add if not exists partition(dt='$dt');</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>368</xloc>
+      <yloc>848</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>执行SQL脚本 6</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>newmyhive</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>alter table itcast_ods.itcast_user_address add if not exists partition(dt='$dt');</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>368</xloc>
+      <yloc>928</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>执行SQL脚本 7</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>newmyhive</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>alter table itcast_ods.itcast_payments add if not exists partition(dt='$dt');</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>352</xloc>
+      <yloc>992</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7717,7 +5040,7 @@ WHERE DATE_FORMAT(createtime, '%Y%m%d') &lt;= '${dt}';</sql>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>localhost-itcast</connection>
+    <connection>node1mysql</connection>
     <sql>SELECT *
 FROM itcast_goods_cats
 ;</sql>
@@ -7735,8 +5058,8 @@ FROM itcast_goods_cats
       </output>
     </remotesteps>
     <GUI>
-      <xloc>384</xloc>
-      <yloc>416</yloc>
+      <xloc>508</xloc>
+      <yloc>593</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7751,11 +5074,11 @@ FROM itcast_goods_cats
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>localhost-itcast</connection>
+    <connection>node1mysql</connection>
     <sql>SELECT *
 FROM itcast_order_goods
 
-WHERE DATE_FORMAT(createtime, '%Y%m%d') &lt;= '${dt}';</sql>
+WHERE DATE_FORMAT(createtime, '%Y%m%d') = '${dt}';</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -7770,44 +5093,8 @@ WHERE DATE_FORMAT(createtime, '%Y%m%d') &lt;= '${dt}';</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
-      <yloc>192</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>根据创建日期读取数据-itcast_order_refunds</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>localhost-itcast</connection>
-    <sql>SELECT
-*
-FROM itcast_order_refunds
-WHERE DATE_FORMAT(createtime, '%Y%m%d') &lt;= '${dt}';
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>400</xloc>
-      <yloc>592</yloc>
+      <xloc>524</xloc>
+      <yloc>369</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7822,7 +5109,7 @@ WHERE DATE_FORMAT(createtime, '%Y%m%d') &lt;= '${dt}';
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>localhost-itcast</connection>
+    <connection>node1mysql</connection>
     <sql>SELECT *
 FROM itcast_org
 ;</sql>
@@ -7840,8 +5127,8 @@ FROM itcast_org
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
-      <yloc>512</yloc>
+      <xloc>524</xloc>
+      <yloc>689</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7856,7 +5143,7 @@ FROM itcast_org
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>localhost-itcast</connection>
+    <connection>node1mysql</connection>
     <sql>SELECT *
 FROM itcast_payments
 </sql>
@@ -7874,8 +5161,8 @@ FROM itcast_payments
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
-      <yloc>816</yloc>
+      <xloc>524</xloc>
+      <yloc>993</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7890,7 +5177,7 @@ FROM itcast_payments
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>localhost-itcast</connection>
+    <connection>node1mysql</connection>
     <sql>SELECT *
 FROM itcast_shops
 ;</sql>
@@ -7908,8 +5195,8 @@ FROM itcast_shops
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
-      <yloc>336</yloc>
+      <xloc>524</xloc>
+      <yloc>513</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7924,7 +5211,7 @@ FROM itcast_shops
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>localhost-itcast</connection>
+    <connection>node1mysql</connection>
     <sql>SELECT *
 FROM itcast_user_address
 ;</sql>
@@ -7942,8 +5229,8 @@ FROM itcast_user_address
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
-      <yloc>752</yloc>
+      <xloc>524</xloc>
+      <yloc>929</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7958,7 +5245,7 @@ FROM itcast_user_address
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>localhost-itcast</connection>
+    <connection>node1mysql</connection>
     <sql>SELECT *
 FROM itcast_users
 </sql>
@@ -7976,8 +5263,8 @@ FROM itcast_users
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
-      <yloc>672</yloc>
+      <xloc>524</xloc>
+      <yloc>849</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -7997,8 +5284,8 @@ FROM itcast_users
     <group>
       <name>{"_":"Embedded MetaStore Elements","namespace":"NamedClusters","type":"NamedCluster"}</name>
       <attribute>
-        <key>hadoop</key>
-        <value>{"children":[{"children":[],"id":"hdfsPassword","value":"cm9vdA=="},{"children":[],"id":"oozieUrl","value":"http://localhost:8080/oozie"},{"children":[],"id":"mapr","value":"N"},{"children":[],"id":"useGateway","value":"N"},{"children":[],"id":"lastModifiedDate","value":"1658420471083"},{"children":[],"id":"jobTrackerHost","value":"server1"},{"children":[],"id":"zooKeeperHost","value":"server1"},{"children":[],"id":"shimIdentifier","value":null},{"children":[],"id":"gatewayUrl","value":null},{"children":[],"id":"jobTrackerPort","value":"8032"},{"children":[],"id":"zooKeeperPort","value":"2181"},{"children":[],"id":"name","value":"hadoop"},{"children":[],"id":"hdfsPort","value":"8020"},{"children":[],"id":"hdfsUsername","value":"root"},{"children":[],"id":"gatewayPassword","value":null},{"children":[],"id":"kafkaBootstrapServers","value":null},{"children":[],"id":"storageScheme","value":"hdfs"},{"children":[],"id":"hdfsHost","value":"server1"},{"children":[],"id":"gatewayUsername","value":null}],"id":"hadoop","value":null,"name":"hadoop","owner":null,"ownerPermissionsList":[]}</value>
+        <key>hadooptest</key>
+        <value>{"children":[{"children":[],"id":"hdfsPassword","value":"MTIzNDU2"},{"children":[],"id":"oozieUrl","value":"http://localhost:8080/oozie"},{"children":[],"id":"mapr","value":"N"},{"children":[],"id":"useGateway","value":"N"},{"children":[],"id":"lastModifiedDate","value":"1578380375463"},{"children":[],"id":"jobTrackerHost","value":"node1"},{"children":[],"id":"zooKeeperHost","value":"node1"},{"children":[],"id":"shimIdentifier","value":null},{"children":[],"id":"gatewayUrl","value":null},{"children":[],"id":"jobTrackerPort","value":"8032"},{"children":[],"id":"zooKeeperPort","value":"2181"},{"children":[],"id":"name","value":"hadooptest"},{"children":[],"id":"hdfsPort","value":"8020"},{"children":[],"id":"hdfsUsername","value":"root"},{"children":[],"id":"gatewayPassword","value":null},{"children":[],"id":"kafkaBootstrapServers","value":null},{"children":[],"id":"storageScheme","value":"hdfs"},{"children":[],"id":"hdfsHost","value":"node1"},{"children":[],"id":"gatewayUsername","value":null}],"id":"hadooptest","value":null,"name":"hadooptest","owner":null,"ownerPermissionsList":[]}</value>
       </attribute>
     </group>
   </attributes>
