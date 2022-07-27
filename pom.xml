@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-<!--    <modules>-->
-<!--        <module>flink</module>-->
-<!--    </modules>-->
+    <!--<modules>
+        <module>itcast_shop_parent</module>
+    </modules>-->
 
 </project>
